@@ -22,3 +22,15 @@ segmenter = DeepSegment('path_to_config')
 segmenter.segment('I am Batman i live in gotham')
 ['I am Batman', 'i live in gotham']
 ```
+
+# To Do:
+Update the seqtag model to work with tf 2.0 (Change to tf.data may be).
+
+Train a single model for multi language segmentation.
+
+# Notes:
+Of all the sentence segmentation models I evaluated, without doubt deepsegment is the best in terms of accuracy in real word (bad punctuation, wrong punctuation)
+
+I trained flair's ner model on the same data and flair has better results but, it's miniscule (0.3% absolute accuracy increase).
+
+Since I want to keep using tf and keras for now, and since flair embeddings are not available for all the languages I want deepsegment to work on, I am going to keep using seqtag for this project.
