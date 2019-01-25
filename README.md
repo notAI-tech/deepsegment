@@ -1,5 +1,5 @@
 # Deep-Segmentation
-Sentence Segmentation of un-punctuated text.
+A sentence segmenter that actually works!
 
 The Demo is available at http://bpraneeth.com/projects
 
