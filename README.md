@@ -6,9 +6,7 @@ The Demo is available at http://bpraneeth.com/projects
 The code and pre-trained models for "DeepCorrection 1: Sentence Segmentation of unpunctuated text." as explained in the medium post at https://medium.com/@praneethbedapudi/deepcorrection-1-sentence-segmentation-of-unpunctuated-text-a1dbc0db4e98 .
 
 
-The pre-trained models is available at https://drive.google.com/open?id=1keUOKjloauUvhAhxErPMZjjkfA2tPnXH
-
-The data is available at https://drive.google.com/open?id=1inDBFHZA8pKhVdFB-I4Vkk3tEuxzt6Dv
+The pre-trained models are available at https://github.com/bedapudi6788/DeepSegment-Models
 
 
 # Requirements:
