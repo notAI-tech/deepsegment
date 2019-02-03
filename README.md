@@ -3,7 +3,8 @@ A sentence segmenter that actually works!
 
 The Demo is available at http://bpraneeth.com/projects
 
-The code and pre-trained models for "DeepCorrection 1: Sentence Segmentation of unpunctuated text." as explained in the medium post at https://medium.com/@praneethbedapudi/deepcorrection-1-sentence-segmentation-of-unpunctuated-text-a1dbc0db4e98 .
+The code and pre-trained models for "DeepCorrection 1: Sentence Segmentation of unpunctuated text." as explained in the medium posts at https://medium.com/@praneethbedapudi/deepcorrection-1-sentence-segmentation-of-unpunctuated-text-a1dbc0db4e98 and
+https://medium.com/@praneethbedapudi/deepsegment-2-0-multilingual-text-segmentation-with-vector-alignment-fd76ce62194f
 
 
 The pre-trained models are available at https://github.com/bedapudi6788/DeepSegment-Models
