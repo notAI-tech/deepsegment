@@ -23,6 +23,8 @@ segmenter.segment('I am Batman i live in gotham')
 ```
 
 # To Do:
+Add a sliding window for processing very long texts.
+
 Update the seqtag model to work with tf 2.0 (Change to tf.data may be).
 
 Train a single model for multi language segmentation.
