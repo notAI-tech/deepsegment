@@ -14,6 +14,8 @@ The pre-trained models are available at https://github.com/bedapudi6788/DeepSegm
 seqtag
 
 ```
+# if you are using gpu for prediction, please see https://stackoverflow.com/questions/34199233/how-to-prevent-tensorflow-from-allocating-the-totality-of-a-gpu-memory for restricting memory usage
+
 from deepsegment import DeepSegment
 # the config file can be found at in the pre-trained model zip. Change the model paths in the config file before loading. 
 # Since the complete glove embeddings are not needed for predictions, "glove_path" can be left empty in config file
