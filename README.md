@@ -1,5 +1,5 @@
 # Deep-Segmentation
-A sentence segmenter that actually works!
+A sentence segmenter that actually works! Now for English, French and Italian.
 
 The Demo is available at http://bpraneeth.com/projects
 
