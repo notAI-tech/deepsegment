@@ -29,6 +29,8 @@ Add a sliding window for processing very long texts.
 
 Update the seqtag model to work with tf 2.0 (Change to tf.data may be).
 
+Update to add Indic languages.
+
 
 # Notes:
 Of all the sentence segmentation models I evaluated, without doubt deepsegment is the best in terms of accuracy in real word (bad punctuation, wrong punctuation)
