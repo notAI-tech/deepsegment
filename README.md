@@ -23,5 +23,5 @@ segmenter.segment('I am Batman i live in gotham')
 ```
 
 # To Do:
-1. Add a sliding window for processing very long texts.
+1. Add a sliding window for processing very long texts. - DONE (segmenter.segment_long(input_sentence))
 2. Publish docker tf-serving image and deepsegment-client.
