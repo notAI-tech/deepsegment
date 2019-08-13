@@ -18,7 +18,7 @@ URL = 'https://github.com/bedapudi6788/Deep-Segmentation'
 EMAIL = 'praneethbedapudi@gmail.com'
 AUTHOR = 'BEDAPUDI PRANEETH'
 REQUIRES_PYTHON = '>=3.5.0'
-VERSION = '2.0.0'
+VERSION = '2.0.1'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
