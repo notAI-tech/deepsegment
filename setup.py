@@ -15,10 +15,10 @@ from setuptools import find_packages, setup, Command
 NAME = 'deepsegment'
 DESCRIPTION = 'Sentence Segmentation with sequece tagging'
 URL = 'https://github.com/bedapudi6788/Deep-Segmentation'
-EMAIL = 'praneethbedapudi@gmail.com'
+EMAIL = 'praneeth@bpraneeth.com'
 AUTHOR = 'BEDAPUDI PRANEETH'
 REQUIRES_PYTHON = '>=3.5.0'
-VERSION = '2.0.1'
+VERSION = '2.0.2'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
