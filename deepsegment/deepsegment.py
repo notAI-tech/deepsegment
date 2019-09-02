@@ -123,5 +123,8 @@ class DeepSegment():
             segmented_window = self.segment([' '.join(window)])[0]
             segmented += segmented_window[:-1]
             prefix = segmented_window[-1].split()
-            
+        
+        if prefix:
+            segmented.append(' '.join(prefix))
+
         return segmented
