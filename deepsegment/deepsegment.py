@@ -115,7 +115,7 @@ class DeepSegment():
         prefix = []
         while sent:
             current_n_window = n_window - len(prefix)
-            if current_n_window == 0:
+            if current_n_window <= 0:
                 current_n_window = n_window
 
             window = prefix + sent[:current_n_window]
