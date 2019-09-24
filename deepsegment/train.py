@@ -79,7 +79,7 @@ def train(x, y, vx, vy, epochs, batch_size, save_folder, glove_path):
 
     os.system('mkdir "' + save_path + '"')
 
-    model = anago.Sequence(embeddings=embeddings)
+    model = seqtag_keras.Sequence(embeddings=embeddings)
     
     model.fit(x, y, x_valid=vx, y_valid=vy, epochs=epochs, batch_size=batch_size, callbacks=[checkpoint, earlystop])
 
