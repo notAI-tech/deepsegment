@@ -23,7 +23,8 @@ VERSION = '2.0.2'
 # What packages are required for this module to be executed?
 REQUIRED = [
     'seqtag-keras',
-    'pydload'
+    'pydload',
+    'progressbar2'
 ]
 
 # What packages are optional?
