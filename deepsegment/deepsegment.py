@@ -30,34 +30,34 @@ def chunk(l, n):
 class DeepSegment():
     seqtag_model = None
     data_converter = None
-    def __init__(self, lang_code='en'):
-        if lang_code not in model_links:
-            print("DeepSegment doesn't support '" + lang_code + "' yet.")
-            print("Please raise a issue at https://github.com/bedapudi6788/deepsegment to add this language into future checklist.")
-            return None
+    def __init__(self, lang_code='en', checkpoint_path=None, params_path=None, utils_path=None):
+        if lang_code:
+            if lang_code not in model_links:
+                print("DeepSegment doesn't support '" + lang_code + "' yet.")
+                print("Please raise a issue at https://github.com/bedapudi6788/deepsegment to add this language into future checklist.")
+                return None
 
-        # loading the model
-        home = os.path.expanduser("~")
-        lang_path = os.path.join(home, '.DeepSegment_' + lang_code)
-        checkpoint_path = os.path.join(lang_path, 'checkpoint')
-        utils_path = os.path.join(lang_path, 'utils')
-        params_path = os.path.join(lang_path, 'params')
-        
-        if not os.path.exists(lang_path):
-            os.mkdir(lang_path)
+            # loading the model
+            home = os.path.expanduser("~")
+            lang_path = os.path.join(home, '.DeepSegment_' + lang_code)
+            checkpoint_path = os.path.join(lang_path, 'checkpoint')
+            utils_path = os.path.join(lang_path, 'utils')
+            params_path = os.path.join(lang_path, 'params')
+            
+            if not os.path.exists(lang_path):
+                os.mkdir(lang_path)
 
-        if not os.path.exists(checkpoint_path):
-            print('Downloading checkpoint', model_links[lang_code]['checkpoint'], 'to', checkpoint_path)
-            pydload.dload(url=model_links[lang_code]['checkpoint'], save_to_path=checkpoint_path, max_time=None)
+            if not os.path.exists(checkpoint_path):
+                print('Downloading checkpoint', model_links[lang_code]['checkpoint'], 'to', checkpoint_path)
+                pydload.dload(url=model_links[lang_code]['checkpoint'], save_to_path=checkpoint_path, max_time=None)
 
-        if not os.path.exists(utils_path):
-            print('Downloading preprocessing utils', model_links[lang_code]['utils'], 'to', utils_path)
-            pydload.dload(url=model_links[lang_code]['utils'], save_to_path=utils_path, max_time=None)
+            if not os.path.exists(utils_path):
+                print('Downloading preprocessing utils', model_links[lang_code]['utils'], 'to', utils_path)
+                pydload.dload(url=model_links[lang_code]['utils'], save_to_path=utils_path, max_time=None)
 
-        if not os.path.exists(params_path):
-            print('Downloading model params', model_links[lang_code]['utils'], 'to', params_path)
-            pydload.dload(url=model_links[lang_code]['params'], save_to_path=params_path, max_time=None)
-
+            if not os.path.exists(params_path):
+                print('Downloading model params', model_links[lang_code]['utils'], 'to', params_path)
+                pydload.dload(url=model_links[lang_code]['params'], save_to_path=params_path, max_time=None)
 
         DeepSegment.seqtag_model = model_from_json(open(params_path).read(), custom_objects={'CRF': CRF})
         DeepSegment.seqtag_model.load_weights(checkpoint_path)
