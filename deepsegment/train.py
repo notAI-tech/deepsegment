@@ -8,7 +8,7 @@ session = tf.Session(config=config)
 
 import seqtag_keras
 
-from anago.utils import load_glove
+from seqtag_keras.utils import load_glove
 from progressbar import progressbar
 
 from keras.callbacks import ModelCheckpoint, EarlyStopping
