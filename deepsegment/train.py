@@ -45,7 +45,7 @@ def bad_sentence_generator(sent, remove_punctuation = None):
 def generate_data(lines, max_sents_per_example=6, n_examples=1000):
     x, y = [], []
     
-    for current_i in progressbar(n_examples):
+    for current_i in progressbar(range(n_examples)):
         x.append([])
         y.append([])
 
