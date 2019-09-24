@@ -74,8 +74,8 @@ def train(x, y, vx, vy, epochs, batch_size, save_folder, glove_path):
     params_path = os.path.join(save_folder, 'params')
     utils_path = os.path.join(save_folder, 'utils')    
 
-    checkpoint = ModelCheckpoint(checkpoint_path, verbose=1, save_best_only=True, mode='auto')
-    earlystop = EarlyStopping(patience=3)
+    checkpoint = ModelCheckpoint(checkpoint_path, verbose=1, save_best_only=True, mode='max', monitor='f1')
+    earlystop = EarlyStopping(patience=3, monitor='f1', mode='max')
 
     model = seqtag_keras.Sequence(embeddings=embeddings)
     
