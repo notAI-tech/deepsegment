@@ -77,8 +77,6 @@ def train(x, y, vx, vy, epochs, batch_size, save_folder, glove_path):
     checkpoint = ModelCheckpoint(checkpoint_path, verbose=1, save_best_only=True, mode='auto')
     earlystop = EarlyStopping(patience=3)
 
-    os.system('mkdir "' + save_path + '"')
-
     model = seqtag_keras.Sequence(embeddings=embeddings)
     
     model.fit(x, y, x_valid=vx, y_valid=vy, epochs=epochs, batch_size=batch_size, callbacks=[checkpoint, earlystop])
