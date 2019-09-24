@@ -74,7 +74,7 @@ def train(x, y, vx, vy, epochs, batch_size, save_folder, glove_path):
     params_path = os.path.join(save_folder, 'params')
     utils_path = os.path.join(save_folder, 'utils')    
 
-    checkpoint = ModelCheckpoint(filepath, verbose=1, save_best_only=True, mode='auto')
+    checkpoint = ModelCheckpoint(checkpoint_path, verbose=1, save_best_only=True, mode='auto')
     earlystop = EarlyStopping(patience=3)
 
     os.system('mkdir "' + save_path + '"')
