@@ -22,6 +22,7 @@ segmenter.segment('I am Batman i live in gotham')
 
 ```
 
+Training deepsegment on custom data: https://colab.research.google.com/drive/1CjYbdbDHX1UmIyvn7nDW2ClQPnnNeA_m
+
 # To Do:
-1. Add a sliding window for processing very long texts. - DONE (segmenter.segment_long(input_sentence))
 2. Publish docker tf-serving image and deepsegment-client.
