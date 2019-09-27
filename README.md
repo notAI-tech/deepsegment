@@ -1,5 +1,5 @@
 # DeepSegment: A sentence segmenter that actually works!
-# For the original implementation please use the "master" branch of this repo.
+Note: For the original implementation please use the "master" branch of this repo.
 
 This implementation is trained on data from various sources. (v1 or the model in master branch is trained only on Tatoeba data).
 
@@ -10,6 +10,14 @@ The Demo is available at http://bpraneeth.com/projects
 pip install --upgrade deepsegment
 # please install tensorflow or tensorflow-gpu separately. Tested with tf and tf-gpu versions 1.8 to 2.0
 ```
+
+# Supported languages:
+en - english (Trained on data from various sources)
+
+fr - french (Only Tatoeba data)
+
+it - italian (Only Tatoeba data)
+
 
 # Usage:
 
