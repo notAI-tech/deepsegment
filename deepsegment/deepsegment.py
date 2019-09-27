@@ -12,9 +12,25 @@ model_links = {
                     'checkpoint': 'https://github.com/bedapudi6788/deepsegment/releases/download/v1.0.2/en_checkpoint',
                     'utils': 'https://github.com/bedapudi6788/deepsegment/releases/download/v1.0.2/en_utils',
                     'params': 'https://github.com/bedapudi6788/deepsegment/releases/download/v1.0.2/en_params'
-                }
+                },
+            'fr': {
+                    'checkpoint': 'https://github.com/bedapudi6788/deepsegment/releases/download/v1.0.2/fr_checkpoint',
+                    'utils': 'https://github.com/bedapudi6788/deepsegment/releases/download/v1.0.2/fr_utils',
+                    'params': 'https://github.com/bedapudi6788/deepsegment/releases/download/v1.0.2/fr_params'
+            },
+            'it': {
+                    'checkpoint': 'https://github.com/bedapudi6788/deepsegment/releases/download/v1.0.2/it_checkpoint',
+                    'utils': 'https://github.com/bedapudi6788/deepsegment/releases/download/v1.0.2/it_utils',
+                    'params': 'https://github.com/bedapudi6788/deepsegment/releases/download/v1.0.2/it_params'
+            }
         }
 
+
+lang_code_mapping = {
+    'english': 'en',
+    'french': 'fr',
+    'italian': 'it'
+}
 
 def chunk(l, n):
     """Yield successive n-sized chunks from l."""
@@ -32,6 +48,9 @@ class DeepSegment():
     data_converter = None
     def __init__(self, lang_code='en', checkpoint_path=None, params_path=None, utils_path=None):
         if lang_code:
+            if lang_code not in model_links and lang_code in lang_code_mapping:
+                lang_code = lang_code_mapping[lang_code]
+                
             if lang_code not in model_links:
                 print("DeepSegment doesn't support '" + lang_code + "' yet.")
                 print("Please raise a issue at https://github.com/bedapudi6788/deepsegment to add this language into future checklist.")
