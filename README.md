@@ -8,7 +8,6 @@ The Demo is available at http://bpraneeth.com/projects
 # Installation:
 ```
 pip install --upgrade deepsegment
-# please install tensorflow or tensorflow-gpu separately. Tested with tf and tf-gpu versions 1.8 to 2.0
 ```
 
 # Supported languages:
