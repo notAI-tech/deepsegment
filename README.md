@@ -1,9 +1,7 @@
 # DeepSegment: A sentence segmenter that actually works!
 Note: For the original implementation please use the "master" branch of this repo.
 
-This implementation is trained on data from various sources. (v1 or the model in master branch is trained only on Tatoeba data).
-
-The Demo is available at http://bpraneeth.com/projects
+The Demo for deepsegment (en) + deeppunct is available at http://bpraneeth.com/projects/deeppunct
 
 # Installation:
 ```
