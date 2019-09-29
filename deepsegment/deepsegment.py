@@ -7,6 +7,15 @@ import os
 import logging
 import time
 
+try:
+    import grpc
+    import tensorflow as tf
+    from tensorflow.python.saved_model import signature_constants
+    from tensorflow_serving.apis import predict_pb2
+    from tensorflow_serving.apis import prediction_service_pb2_grpc
+except Exception as ex:
+    logging.warning("Tensorflow serving is not installed. Cannot be used with tesnorflow serving docker images.")
+
 model_links = {
             'en': {
                     'checkpoint': 'https://github.com/bedapudi6788/deepsegment/releases/download/v1.0.2/en_checkpoint',
@@ -43,10 +52,28 @@ def chunk(l, n):
 
     return chunked_l
 
+def predict_response_to_array(response, output_tensor_name):
+    dims = response.outputs[output_tensor_name].tensor_shape.dim
+    shape = tuple(d.size for d in dims)
+    return np.reshape(response.outputs[output_tensor_name].float_val, shape)
+
+def get_tf_serving_respone(seqtag_model, x):
+    channel = grpc.insecure_channel("localhost:8500")
+    stub = prediction_service_pb2_grpc.PredictionServiceStub(channel)
+    request = predict_pb2.PredictRequest()
+    request.model_spec.name = seqtag_model
+    request.model_spec.signature_name = signature_constants.DEFAULT_SERVING_SIGNATURE_DEF_KEY
+    request.inputs["word-input"].CopyFrom(tf.contrib.util.make_tensor_proto(x[0], dtype="int32", shape=None))
+    request.inputs["char-input"].CopyFrom(tf.contrib.util.make_tensor_proto(x[1], dtype="int32", shape=None))
+    response =stub.Predict(request, 20)
+    preds = predict_response_to_array(response, "prediction")
+    preds = [np.argmax(_tags, axis=1).tolist() for _tags in preds]
+    return preds
+
 class DeepSegment():
     seqtag_model = None
     data_converter = None
-    def __init__(self, lang_code='en', checkpoint_path=None, params_path=None, utils_path=None):
+    def __init__(self, lang_code='en', checkpoint_path=None, params_path=None, utils_path=None, tf_serving=False):
         if lang_code:
             if lang_code not in model_links and lang_code in lang_code_mapping:
                 lang_code = lang_code_mapping[lang_code]
@@ -66,7 +93,7 @@ class DeepSegment():
             if not os.path.exists(lang_path):
                 os.mkdir(lang_path)
 
-            if not os.path.exists(checkpoint_path):
+            if not os.path.exists(checkpoint_path) and not tf_serving:
                 print('Downloading checkpoint', model_links[lang_code]['checkpoint'], 'to', checkpoint_path)
                 pydload.dload(url=model_links[lang_code]['checkpoint'], save_to_path=checkpoint_path, max_time=None)
 
@@ -78,8 +105,13 @@ class DeepSegment():
                 print('Downloading model params', model_links[lang_code]['utils'], 'to', params_path)
                 pydload.dload(url=model_links[lang_code]['params'], save_to_path=params_path, max_time=None)
 
-        DeepSegment.seqtag_model = model_from_json(open(params_path).read(), custom_objects={'CRF': CRF})
-        DeepSegment.seqtag_model.load_weights(checkpoint_path)
+        if not tf_serving:
+            DeepSegment.seqtag_model = model_from_json(open(params_path).read(), custom_objects={'CRF': CRF})
+            DeepSegment.seqtag_model.load_weights(checkpoint_path)
+        
+        if tf_serving:
+            DeepSegment.seqtag_model = 'deepsegment_' + lang_code
+
         DeepSegment.data_converter = pickle.load(open(utils_path, 'rb'))
 
     def segment(self, sents):
@@ -99,8 +131,13 @@ class DeepSegment():
             logging.warn("Consider using segment_long for longer sentences.")
 
         encoded_sents = DeepSegment.data_converter.transform(sents)
-        all_tags = DeepSegment.seqtag_model.predict(encoded_sents)
-        all_tags = [np.argmax(_tags, axis=1).tolist() for _tags in all_tags]
+        
+        if not isinstance(DeepSegment.seqtag_model, type('')):
+            all_tags = DeepSegment.seqtag_model.predict(encoded_sents)
+            all_tags = [np.argmax(_tags, axis=1).tolist() for _tags in all_tags]
+        
+        else:
+            all_tags = get_tf_serving_respone(DeepSegment.seqtag_model, encoded_sents)
 
         segmented_sentences = [[] for _ in sents]
         for sent_index, (sent, tags) in enumerate(zip(sents, all_tags)):
