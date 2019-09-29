@@ -7,6 +7,9 @@ import os
 import logging
 import time
 
+
+is_tfserving_installed = True
+
 try:
     import grpc
     import tensorflow as tf
@@ -14,7 +17,9 @@ try:
     from tensorflow_serving.apis import predict_pb2
     from tensorflow_serving.apis import prediction_service_pb2_grpc
 except Exception as ex:
-    logging.warning("Tensorflow serving is not installed. Cannot be used with tesnorflow serving docker images.")
+    is_tfserving_installed = False
+    logging.warn("Tensorflow serving is not installed. Cannot be used with tesnorflow serving docker images.")
+    logging.warn("Run pip install tensorflow-serving-api==1.12.0 if you want to use with tf serving.")
 
 model_links = {
             'en': {
@@ -109,7 +114,11 @@ class DeepSegment():
             DeepSegment.seqtag_model = model_from_json(open(params_path).read(), custom_objects={'CRF': CRF})
             DeepSegment.seqtag_model.load_weights(checkpoint_path)
         
-        if tf_serving:
+        elif tf_serving:
+            if not is_tfserving_installed:
+                logging.exception("Tensorflow serving is not installed. Cannot be used with tesnorflow serving docker images.")
+                logging.exception("Run pip install tensorflow-serving-api==1.12.0 if you want to use with tf serving.")
+                exit()
             DeepSegment.seqtag_model = 'deepsegment_' + lang_code
 
         DeepSegment.data_converter = pickle.load(open(utils_path, 'rb'))
