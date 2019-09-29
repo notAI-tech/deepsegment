@@ -27,7 +27,18 @@ segmenter.segment('I am Batman i live in gotham')
 
 ```
 
-Training deepsegment on custom data: https://colab.research.google.com/drive/1CjYbdbDHX1UmIyvn7nDW2ClQPnnNeA_m
+# Using with tf serving docker image
+```
+docker pull bedapudi6788/deepsegment_en:v2
+docker run -d -p 8500:8500 bedapudi6788/deepsegment_en:v2
+```
 
-# To Do:
-2. Publish docker tf-serving image and deepsegment-client.
+```
+from deepsegment import DeepSegment
+# The default language is 'en'
+segmenter = DeepSegment('en', tf_serving=True)
+segmenter.segment('I am Batman i live in gotham')
+# ['I am Batman', 'i live in gotham']
+```
+
+Training deepsegment on custom data: https://colab.research.google.com/drive/1CjYbdbDHX1UmIyvn7nDW2ClQPnnNeA_m
