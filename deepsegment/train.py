@@ -1,10 +1,16 @@
 import random
 random.seed(42)
 
+import logging
+
 import tensorflow as tf
-config = tf.ConfigProto()
-config.gpu_options.allow_growth = True
-session = tf.Session(config=config)
+
+try:
+    config = tf.ConfigProto()
+    config.gpu_options.allow_growth = True
+    session = tf.Session(config=config)
+except:
+    pass
 
 import seqtag_keras
 
