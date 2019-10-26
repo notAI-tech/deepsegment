@@ -4,7 +4,7 @@ Note: For the original implementation please use the "master" branch of this rep
 The Demo for deepsegment (en) + deeppunct is available at http://bpraneeth.com/projects/deeppunct
 
 # Installation:
-```
+```bash
 pip install --upgrade deepsegment
 ```
 
@@ -18,7 +18,7 @@ it - italian (Only Tatoeba data)
 
 # Usage:
 
-```
+```python
 from deepsegment import DeepSegment
 # The default language is 'en'
 segmenter = DeepSegment('en')
@@ -28,12 +28,12 @@ segmenter.segment('I am Batman i live in gotham')
 ```
 
 # Using with tf serving docker image
-```
+```bash
 docker pull bedapudi6788/deepsegment_en:v2
 docker run -d -p 8500:8500 bedapudi6788/deepsegment_en:v2
 ```
 
-```
+```python
 from deepsegment import DeepSegment
 # The default language is 'en'
 segmenter = DeepSegment('en', tf_serving=True)
