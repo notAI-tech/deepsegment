@@ -41,4 +41,22 @@ segmenter.segment('I am Batman i live in gotham')
 # ['I am Batman', 'i live in gotham']
 ```
 
+# Finetuning DeepSegment
+```python
+from deepsegment import finetune, generate_data
+
+x, y = generate_data(['my name', 'is batman', 'who are', 'you'], n_examples=10000)
+vx, vy = generate_data(['my name', 'is batman'])
+
+# NOTE: name, epochs, batch_size, lr are optional arguments.
+finetune('en', x, y, vx, vy, name='finetuned_model_name', epochs=number_of_epochs, batch_size=batch_size, lr=learning_rate)
+```
+
+# Using with a finetuned checkpoint
+```python
+from deepsegment import DeepSegment
+segmenter = DeepSegment('en', checkpoint_name='finetuned_model_name')
+```
+
+
 Training deepsegment on custom data: https://colab.research.google.com/drive/1CjYbdbDHX1UmIyvn7nDW2ClQPnnNeA_m
