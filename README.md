@@ -42,6 +42,8 @@ segmenter.segment('I am Batman i live in gotham')
 ```
 
 # Finetuning DeepSegment
+Since one-size will never fit all, finetuning deepsegment's default models with your own data is encouraged.
+
 ```python
 from deepsegment import finetune, generate_data
 
