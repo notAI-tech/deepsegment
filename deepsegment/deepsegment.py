@@ -6,6 +6,7 @@ import pickle
 import os
 import logging
 import time
+import glob
 
 
 is_tfserving_installed = True
@@ -78,7 +79,7 @@ def get_tf_serving_respone(seqtag_model, x):
 class DeepSegment():
     seqtag_model = None
     data_converter = None
-    def __init__(self, lang_code='en', checkpoint_path=None, params_path=None, utils_path=None, tf_serving=False):
+    def __init__(self, lang_code='en', checkpoint_path=None, params_path=None, utils_path=None, tf_serving=False, checkpoint_name=None):
         if lang_code:
             if lang_code not in model_links and lang_code in lang_code_mapping:
                 lang_code = lang_code_mapping[lang_code]
@@ -91,7 +92,31 @@ class DeepSegment():
             # loading the model
             home = os.path.expanduser("~")
             lang_path = os.path.join(home, '.DeepSegment_' + lang_code)
+
             checkpoint_path = os.path.join(lang_path, 'checkpoint')
+
+            if checkpoint_name:
+                if not checkpoint_name.startswith('checkpoint_'):
+                    checkpoint_name = 'checkpoint_' + checkpoint_name
+
+                finetuned_checkpoint_path = os.path.join(lang_path, checkpoint_name)
+                if not os.path.exists(finetuned_checkpoint_path):
+                    print('There is no file present at', finetuned_checkpoint_path)
+                    print('All the files present at that path are:', glob.glob(lang_path + '/*'))
+                    print('Loading the default checkpoint')
+                else:
+                    checkpoint_path = finetuned_checkpoint_path
+            else:
+                other_checkpoints = glob.glob(checkpoint_path + '_*')
+                if other_checkpoints:
+                    other_checkpoints = [i.split('/')[-1] for i in other_checkpoints]
+                    print('\n==============================================================================================================')
+                    print("NOTE: There are multiple checkpoints present for this language.")
+                    print(other_checkpoints)
+                    print('Default checkpoint is currently being used.')
+                    print('To use a different checkpoint, use DeepSegment("en", checkpoint_name=name_of_the_checkpoint)')
+                    print('==============================================================================================================\n')
+
             utils_path = os.path.join(lang_path, 'utils')
             params_path = os.path.join(lang_path, 'params')
             
