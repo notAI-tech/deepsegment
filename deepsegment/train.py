@@ -26,6 +26,7 @@ import os
 import re
 import string
 import pickle
+import datetime
 
 from seqeval.metrics import f1_score
 
@@ -103,6 +104,11 @@ lang_code_mapping = {
 }
 
 def finetune(lang_code, x, y, vx, vy, name=None, epochs=5, batch_size=16, lr=0.0001):
+    if not name:
+        name = str(datetime.datetime.now()).split()
+        name = '-'.join(name)
+        print('Name not provided. The checkpoint will be named checkpoint_' + name)
+
     if lang_code in lang_code_mapping:
         lang_code = lang_code_mapping[lang_code]
 
@@ -144,6 +150,7 @@ def finetune(lang_code, x, y, vx, vy, name=None, epochs=5, batch_size=16, lr=0.0
 
     trainer = Trainer(model, preprocessor=p)
     
+    checkpoint_path = checkpoint_path + '_' + name
     checkpoint = ModelCheckpoint(checkpoint_path, verbose=1, save_best_only=True, mode='max', monitor='f1')
     earlystop = EarlyStopping(patience=3, monitor='f1', mode='max')
 
