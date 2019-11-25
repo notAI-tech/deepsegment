@@ -31,6 +31,19 @@ import datetime
 from seqeval.metrics import f1_score
 
 def bad_sentence_generator(sent, remove_punctuation = None):
+    """
+        Returns sentence with completely/ partially removed punctuation.
+
+        Parameters:
+        sent (str): Sentence on which the punctuation removal operation is performed.
+        
+        remove_punctuation (int): removing punctuation completely if remove_punctuation ==0 or ==1, removing punctuation till a randomly selected point if remove_punctuation ==2
+
+        Returns:
+        str: Sentence with modified punctuation
+
+    """
+
     if not remove_punctuation:
         remove_punctuation = random.randint(0, 3)
 
@@ -56,6 +69,20 @@ def bad_sentence_generator(sent, remove_punctuation = None):
     return sent
 
 def generate_data(lines, max_sents_per_example=6, n_examples=1000):
+    """
+        Generates training data for deepsegment from list of sentences.
+
+        Parameters:
+        lines (list): Base sentences for data generation.
+
+        max_sents_per_example (int): Maximum number of sentences to be combined to form a single paragraph.
+        
+        n_examples (int): Number of training examples to be generated.
+        
+        Returns:
+        list, list: Training data and corresponding labels in BIOU format.
+
+    """
     x, y = [], []
     
     for current_i in progressbar(range(n_examples)):
@@ -80,6 +107,30 @@ def generate_data(lines, max_sents_per_example=6, n_examples=1000):
     return x, y
 
 def train(x, y, vx, vy, epochs, batch_size, save_folder, glove_path):
+    """
+        Trains a deepsegment model.
+
+        Parameters:
+        x (list): x generated from generate_data
+
+        y (list): y generated from generate_data
+
+        vx (list): x generated from generate_data
+
+        vy (list): y generated from generate_data
+
+
+        epochs (int): Max number of epochs.
+        
+        batch_size (int): batch_size
+
+        save_folder (str): path for the directory where checkpoints should be saved.
+
+        glove_path (str): path to 100d word vectors.
+        
+
+    """
+
     embeddings = load_glove(glove_path)
     
     checkpoint_path = os.path.join(save_folder, 'checkpoint')

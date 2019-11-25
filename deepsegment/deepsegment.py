@@ -48,7 +48,17 @@ lang_code_mapping = {
 }
 
 def chunk(l, n):
-    """Yield successive n-sized chunks from l."""
+    """
+    Chunk a list l into chunks of equal size n
+
+    Parameters:
+    l (list): List (of any items) to be chunked.
+    n (int): size of each chunk.
+
+    Returns:
+    list: Return list os lists (chunks)
+
+    """
     chunked_l = []
     for i in range(0, len(l), n):
         chunked_l.append(l[i:i + n])
@@ -59,11 +69,18 @@ def chunk(l, n):
     return chunked_l
 
 def predict_response_to_array(response, output_tensor_name):
+    """
+    Convert response from tf-serving to np array (keras model.predict format)
+    """
     dims = response.outputs[output_tensor_name].tensor_shape.dim
     shape = tuple(d.size for d in dims)
     return np.reshape(response.outputs[output_tensor_name].float_val, shape)
 
 def get_tf_serving_respone(seqtag_model, x):
+    """
+    Make GRPC call to tfserving server and read it's output.
+
+    """
     channel = grpc.insecure_channel("localhost:8500")
     stub = prediction_service_pb2_grpc.PredictionServiceStub(channel)
     request = predict_pb2.PredictRequest()
@@ -80,6 +97,24 @@ class DeepSegment():
     seqtag_model = None
     data_converter = None
     def __init__(self, lang_code='en', checkpoint_path=None, params_path=None, utils_path=None, tf_serving=False, checkpoint_name=None):
+        """
+        Initialize deepsegment
+
+        Parameters:
+
+        lang_code (str): Name or code of the language. (default is english)
+
+        checkpoint_path (str): If using with custom models, pass the custom model checkpoint path and set lang_code=None
+
+        params_path (str): See checkpoint_path.
+
+        utils_path (str): See checkpoint_path.
+
+        tf_serving (bool): If using with tf_serving docker image, set to True.
+
+        checkpoint_name (str): If using with finetuned models use this.
+
+        """
         if lang_code:
             if lang_code not in model_links and lang_code in lang_code_mapping:
                 lang_code = lang_code_mapping[lang_code]
@@ -149,6 +184,16 @@ class DeepSegment():
         DeepSegment.data_converter = pickle.load(open(utils_path, 'rb'))
 
     def segment(self, sents):
+        """
+        segment a list of sentences or single sentence
+
+        Parameters:
+        sents (list or str): List (or single) of sentences to be segmented.
+
+        Returns:
+        list: Return list or list of lists of segmented sentenes.
+
+        """
         if not DeepSegment.seqtag_model:
             print('Please load the model first')
 
@@ -192,6 +237,16 @@ class DeepSegment():
         return segmented_sentences
     
     def segment_long(self, sent, n_window=None):
+        """
+        Segment a longer text
+
+        Parameters:
+        sent (str): Input text.
+        n_window (int): window size (words) for iterative segmentation.
+
+        Returns:
+        list: Return list of sentences.
+        """
         if not n_window:
             logging.warn("Using default n_window=10. Set this parameter based on your data.")
             n_window = 10
