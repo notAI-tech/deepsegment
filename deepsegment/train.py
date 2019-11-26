@@ -155,6 +155,29 @@ lang_code_mapping = {
 }
 
 def finetune(lang_code, x, y, vx, vy, name=None, epochs=5, batch_size=16, lr=0.0001):
+    """
+        Finetunes an existing deepsegment model.
+
+        Parameters:
+        x (list): x generated from generate_data
+
+        y (list): y generated from generate_data
+
+        vx (list): x generated from generate_data
+
+        vy (list): y generated from generate_data
+
+        name (str): name of the fintuned checkpoint. (params, utils will be same for finetuned and base models.)
+
+
+        epochs (int): Max number of epochs.
+        
+        batch_size (int): batch_size
+
+        lr (float): initial learning rate.        
+
+    """
+
     if not name:
         name = str(datetime.datetime.now()).split()
         name = '-'.join(name)
