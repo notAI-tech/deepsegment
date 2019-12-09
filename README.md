@@ -1,4 +1,7 @@
 # DeepSegment: A sentence segmenter that actually works!
+[![Downloads](https://pepy.tech/badge/deepsegment)](https://pepy.tech/project/deepsegment) [![DOI](https://zenodo.org/badge/157704801.svg)](https://zenodo.org/badge/latestdoi/157704801)
+
+
 Note: For the original implementation please use the "master" branch of this repo.
 
 The Demo for deepsegment (en) + deeppunct is available at http://bpraneeth.com/projects/deeppunct
