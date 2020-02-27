@@ -67,3 +67,7 @@ segmenter = DeepSegment('en', checkpoint_name='finetuned_model_name')
 
 
 Training deepsegment on custom data: https://colab.research.google.com/drive/1CjYbdbDHX1UmIyvn7nDW2ClQPnnNeA_m
+
+# Similar Projects:
+
+**https://github.com/bminixhofer/nnsplit** (with bindings for Python, Rust and Javascript.) 
