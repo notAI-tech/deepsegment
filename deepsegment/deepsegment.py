@@ -183,7 +183,7 @@ class DeepSegment():
 
         DeepSegment.data_converter = pickle.load(open(utils_path, 'rb'))
 
-    def segment(self, sents):
+    def segment(self, sents, batch_size=32):
         """
         segment a list of sentences or single sentence
 
@@ -212,7 +212,7 @@ class DeepSegment():
         encoded_sents = DeepSegment.data_converter.transform(sents)
         
         if not isinstance(DeepSegment.seqtag_model, type('')):
-            all_tags = DeepSegment.seqtag_model.predict(encoded_sents)
+            all_tags = DeepSegment.seqtag_model.predict(encoded_sents, batch_size=batch_size)
             all_tags = [np.argmax(_tags, axis=1).tolist() for _tags in all_tags]
         
         else:
