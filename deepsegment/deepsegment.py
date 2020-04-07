@@ -167,7 +167,7 @@ class DeepSegment():
                 pydload.dload(url=model_links[lang_code]['utils'], save_to_path=utils_path, max_time=None)
 
             if not os.path.exists(params_path):
-                print('Downloading model params', model_links[lang_code]['utils'], 'to', params_path)
+                print('Downloading model params', model_links[lang_code]['params'], 'to', params_path)
                 pydload.dload(url=model_links[lang_code]['params'], save_to_path=params_path, max_time=None)
 
         if not tf_serving:
