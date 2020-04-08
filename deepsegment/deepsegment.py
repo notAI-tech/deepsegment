@@ -198,7 +198,7 @@ class DeepSegment():
             print('Please load the model first')
 
         string_output = False
-        if not isinstance(sents, list):
+        if isinstance(sents, str):
             logging.warn("Batch input strings for faster inference.")
             string_output = True
             sents = [sents]
