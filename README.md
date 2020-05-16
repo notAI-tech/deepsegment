@@ -5,8 +5,6 @@
 
 Note: For the original implementation please use the "master" branch of this repo.
 
-The Demo for deepsegment (en) + deeppunct is available at http://bpraneeth.com/projects/deeppunct
-
 Code documentation available at http://bpraneeth.com/docs
 
 # Installation:
