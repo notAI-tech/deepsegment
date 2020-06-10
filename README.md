@@ -1,7 +1,7 @@
 # DeepSegment: A sentence segmenter that actually works!
 [![Downloads](https://pepy.tech/badge/deepsegment)](https://pepy.tech/project/deepsegment) [![DOI](https://zenodo.org/badge/157704801.svg)](https://zenodo.org/badge/latestdoi/157704801)
 
-**DeepSegment is available as a free to use API and as a self-hostable service via https://github.com/notAI-tech/fastDeploy**
+**DeepSegment is available as a free to use API (https://fastdeploy.notai.tech/free_apis) and as a self-hostable service via https://github.com/notAI-tech/fastDeploy**
 
 Note: For the original implementation please use the "master" branch of this repo.
 
