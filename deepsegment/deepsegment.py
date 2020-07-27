@@ -171,17 +171,17 @@ class DeepSegment():
                 pydload.dload(url=model_links[lang_code]['params'], save_to_path=params_path, max_time=None)
 
         if not tf_serving:
-            DeepSegment.seqtag_model = model_from_json(open(params_path).read(), custom_objects={'CRF': CRF})
-            DeepSegment.seqtag_model.load_weights(checkpoint_path)
+            self.seqtag_model = model_from_json(open(params_path).read(), custom_objects={'CRF': CRF})
+            self.seqtag_model.load_weights(checkpoint_path)
         
         elif tf_serving:
             if not is_tfserving_installed:
                 logging.exception("Tensorflow serving is not installed. Cannot be used with tesnorflow serving docker images.")
                 logging.exception("Run pip install tensorflow-serving-api==1.12.0 if you want to use with tf serving.")
                 exit()
-            DeepSegment.seqtag_model = 'deepsegment_' + lang_code
+            self.seqtag_model = 'deepsegment_' + lang_code
 
-        DeepSegment.data_converter = pickle.load(open(utils_path, 'rb'))
+        self.data_converter = pickle.load(open(utils_path, 'rb'))
 
     def segment(self, sents, batch_size=32):
         """
@@ -194,7 +194,7 @@ class DeepSegment():
         list: Return list or list of lists of segmented sentenes.
 
         """
-        if not DeepSegment.seqtag_model:
+        if not self.seqtag_model:
             print('Please load the model first')
 
         string_output = False
@@ -209,14 +209,14 @@ class DeepSegment():
         if max_len >= 40:
             logging.warn("Consider using segment_long for longer sentences.")
 
-        encoded_sents = DeepSegment.data_converter.transform(sents)
+        encoded_sents = self.data_converter.transform(sents)
         
-        if not isinstance(DeepSegment.seqtag_model, type('')):
-            all_tags = DeepSegment.seqtag_model.predict(encoded_sents, batch_size=batch_size)
+        if not isinstance(self.seqtag_model, type('')):
+            all_tags = self.seqtag_model.predict(encoded_sents, batch_size=batch_size)
             all_tags = [np.argmax(_tags, axis=1).tolist() for _tags in all_tags]
         
         else:
-            all_tags = get_tf_serving_respone(DeepSegment.seqtag_model, encoded_sents)
+            all_tags = get_tf_serving_respone(self.seqtag_model, encoded_sents)
 
         segmented_sentences = [[] for _ in sents]
         for sent_index, (sent, tags) in enumerate(zip(sents, all_tags)):
