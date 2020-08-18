@@ -9,6 +9,7 @@ Code documentation available at http://bpraneeth.com/docs
 
 # Installation:
 ```bash
+# Tested with (keras==2.3.1; tensorflow==2.2.0) and (keras==2.2.4; tensorflow==1.14.0)
 pip install --upgrade deepsegment
 ```
 
